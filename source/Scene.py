@@ -11,6 +11,7 @@ from pygame.locals import *
 class Scene():
     def __init__(self, screen):
         self.screen = screen
+        self.player = None
         self.beginPlatform = None
         self.endPlatform = None
         self.background = None
@@ -18,10 +19,13 @@ class Scene():
         self.playerGroup = pygame.sprite.Group()
         self.planetGroup = pygame.sprite.Group()
         self.platformGroup = pygame.sprite.Group()
+        self.createPlayer()
+        self.addPlatforms()
+        self.createBackgrond()
 
     def createBackgrond(self):
         self.background = pygame.image.load("../assets/background.png").convert()
-        self.background = pygame.transform.scale(background, (1200, 900))
+        self.background = pygame.transform.scale(self.background, (1200, 900))
 
 
     def addPlanet(self, planet):
@@ -40,13 +44,15 @@ class Scene():
         end = pygame.image.load("../assets/base.png").convert_alpha()
         self.beginPlatform = GameObject("PlataformaInicial", begin, (30, 450))
         self.endPlatform = GameObject("PlataformaFinal", end, (830, 450))
+        self.platformGroup.add(self.beginPlatform)
+        self.platformGroup.add(self.endPlatform)
 
     def update(self, dt):
         self.player.dt = dt
         self.player.update()
 
     def draw(self):
-        surface.blit(self.background, (0,0))
+        self.screen.blit(self.background, (0,0))
         self.platformGroup.draw(self.screen)
         self.playerGroup.draw(self.screen)
         self.planetGroup.draw(self.screen)

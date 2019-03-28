@@ -25,7 +25,7 @@ class Teste():
         planeta = pygame.transform.scale(planeta, (floor(0.3*w), floor(0.3*h)))
         planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
         scene = Scene(screen)
-        scene addPlanet(planet)
+        scene.addPlanet(planet)
 
         # planets.append(planet1)
         clock = pygame.time.Clock()
@@ -43,7 +43,7 @@ class Teste():
         while True:
 
             for event in pygame.event.get():
-                eventHandler.handleEvent(event, player)
+                eventHandler.handleEvent(event, scene.player)
 
             # screen.blit(background, (0,0))
             dt = clock.tick()/1000.0
@@ -53,7 +53,7 @@ class Teste():
             # planet1.render(screen)
             # player.render(screen)
             scene.update(dt)
-            scene.draw(screen)
+            scene.draw()
 
 
 
