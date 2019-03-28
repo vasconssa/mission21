@@ -11,10 +11,10 @@ from source.Utils import Utils
 
 
 class Teste():
-    def launch(self):
+    def launch(self,screen):
         # pygame.init()
 
-        screen = pygame.display.set_mode((Utils.DISPLAY_WIDTH, Utils.DISPLAY_HEIGHT), 0, 32)
+        # screen = pygame.display.set_mode((Utils.DISPLAY_WIDTH, Utils.DISPLAY_HEIGHT), 0, 32)
         player = Player((50,50))
         planets = []
 

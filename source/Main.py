@@ -1,117 +1,128 @@
-from GameObject import GameObject
-from math import *
-from RigidBody import RigidBody
-from Player import Player
-from EventHandler import EventHandler
-from Vector2D import Vector2D
 import pygame
-from pygame.locals import *
-from sys import exit
-from source.Utils import Utils as Utils,IMG_PATH
+import os
+from source.Utils import Utils as Utils,ASSETS_PATH
 from source.test import Teste
+# Game Initialization
+pygame.init()
 
-class Main:
-    def __init__(self):
-        self.gameDisplay = pygame.display.set_mode((Utils.DISPLAY_WIDTH, Utils.DISPLAY_HEIGHT),0,32)
+# Center the Game Application
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-
-
-    def launch_game(self):
-        pygame.display.set_caption("Mission21")
-        self.clock = pygame.time.Clock()
-
-        self.game_intro()
-
-        self.start_button = None
-
-    def colorize(self,image, newColor):
-        """
-        Create a "colorized" copy of a surface (replaces RGB values with the given color, preserving the per-pixel alphas of
-        original).
-        :param image: Surface to create a colorized copy of
-        :param newColor: RGB color to use (original alpha values are preserved)
-        :return: New colorized Surface instance
-        """
-        image = image.copy()
-
-        # zero out RGB values
-        image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-        # add in new RGB values
-        image.fill(newColor[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
-
-        return image
-
-    def set_start_menu(self):
-        imgPath = IMG_PATH.BACKGROUND_IMG_PATH
-
-        background = Background(imgPath, [0, 0])
-        # self.fill([255,255,255])
-        self.gameDisplay.blit(background.image, background.rect)
-
-        startPath = IMG_PATH.START_IMG_PATH
-
-        img = pygame.image.load(startPath)
-
-        img = self.colorize(img,(190,0,0))
-
-        pygame.transform.scale(img,(70,50))
-
-        rect = img.get_rect()
-
-        rect.center = ((Utils.DISPLAY_WIDTH / 3), 3 * (Utils.DISPLAY_HEIGHT / 4))
-
-        self.start_button = self.gameDisplay.blit(img,rect)
-
-    def game_intro(self):
-        intro = True
-
-        while intro:
-            for event in pygame.event.get():
-                print(event)
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if(self.start_button.collidepoint(event.pos)):
-                        intro = False
-                        #TODO diminuir tempo de espera entre o clique no menu e o começo do jogo
-
-                        #TODO capturar clique dentro do retângulo do botão de start
-                        break
+# Game Resolution
+screen_width = Utils.DISPLAY_WIDTH
+screen_height = Utils.DISPLAY_HEIGHT
+screen = pygame.display.set_mode((screen_width, screen_height))
 
 
-            self.set_start_menu()
+# Text Renderer
+def text_format(message, textFont, textSize, textColor):
+    newFont = pygame.font.Font(textFont, textSize)
+    newText = newFont.render(message, 0, textColor)
 
-            pygame.display.update()
-            self.clock.tick(15)
+    return newText
+
+
+# Colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+gray = (50, 50, 50)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+
+# Game Fonts
+font = ASSETS_PATH.START_MENU_FONT_PATH
+
+# Game Framerate
+clock = pygame.time.Clock()
+FPS = 30
 
 
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
-        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+        pygame.sprite.Sprite.__init__(self)  # call Sprite initializer
         self.image = pygame.image.load(image_file)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
 
 
-pygame.init()
-
-main = Main()
-
-main.launch_game()
-
-Teste().launch()
+backgroundImage = Background(ASSETS_PATH.BACKGROUND_IMG_PATH,[0, 0])
 
 
+def draw_text(surf, text, size, x, y,textColor = white):
+    ## selecting a cross platform font to display the score
+    newFont = pygame.font.Font(font, size)
+    text_surface = newFont.render(text, 0, textColor)
+
+    # text_surface = newFont.render(text, True, WHITE)       ## True denotes the font to be anti-aliased
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
+# Main Menu
+def main_menu():
+    menu = True
+    selected = "start"
+
+    while menu:
+        # for event in pygame.event.get():
+        event = pygame.event.poll()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                selected = "start"
+            elif event.key == pygame.K_DOWN:
+                selected = "quit"
+            if event.key == pygame.K_RETURN:
+                if selected == "start":
+                    print("Start")
+                    screen.fill(black)
+
+                    screen.blit(backgroundImage.image, backgroundImage.rect)
+                    loading = text_format("Loading...", font, 90, red)
+                    rect = loading.get_rect()
+                    draw_text(screen,"Loading...",90,screen_width/3,3*screen_height/4,red)
+                    pygame.display.update()
+                    break
+                if selected == "quit":
+                    pygame.quit()
+                    quit()
+
+        # Main Menu UI
+        screen.fill(blue)
+        title = text_format("Mission 21", font, 90, yellow)
+        if selected == "start":
+            text_start = text_format("START", font, 75, red)
+        else:
+            text_start = text_format("START", font, 75, white)
+        if selected == "quit":
+            text_quit = text_format("QUIT", font, 75, red)
+        else:
+            text_quit = text_format("QUIT", font, 75, white)
+
+        title_rect = title.get_rect()
+        start_rect = text_start.get_rect()
+        quit_rect = text_quit.get_rect()
+
+        # Main Menu Text
+        screen.blit(backgroundImage.image,backgroundImage.rect)
+        # screen.blit(title, (screen_width / 2 - (title_rect[2] / 2), 80))
+
+        screen.blit(text_start, [(Utils.DISPLAY_WIDTH / 4), 7 * (Utils.DISPLAY_HEIGHT / 10)])
+        screen.blit(text_quit, [(Utils.DISPLAY_WIDTH / 4), 8.2 * (Utils.DISPLAY_HEIGHT / 10)])
+        pygame.display.update()
+        clock.tick(FPS)
+        pygame.display.set_caption("Mission21")
+
+    Teste().launch(screen)
+#Initialize the Game
+main_menu()
+pygame.quit()
+quit()
 
 
-# def text_objects(text, font):
-#     textSurface = font.render(text, True, black)
-#     return textSurface, textSurface.get_rect()
 
 
-
-
-
-#pygame.quit()
-#quit()
