@@ -14,7 +14,7 @@ class IMG_PATH:
 
     BACKGROUND_IMG_PATH =  '../assets/tela_inicial.png'
 
-    START_IMG_PATH = '../assets/start2.png'
+    START_IMG_PATH = '../assets/start.png'
 
 
 

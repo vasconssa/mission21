@@ -7,8 +7,8 @@ from Vector2D import Vector2D
 import pygame
 from pygame.locals import *
 from sys import exit
-from source.Utils import Utils as Utils,IMG_PATH
-from source.test import Teste
+from Utils import Utils as Utils,IMG_PATH
+from test import Teste
 
 class Main:
     def __init__(self):
@@ -52,7 +52,7 @@ class Main:
 
         img = pygame.image.load(startPath)
 
-        img = self.colorize(img,(190,0,0))
+        # img = self.colorize(img,(190,0,0))
 
         pygame.transform.scale(img,(70,50))
 
