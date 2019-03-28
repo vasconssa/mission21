@@ -1,3 +1,4 @@
+from AbstractScene import AbstractScene
 from GameObject import GameObject
 from math import *
 from RigidBody import RigidBody
@@ -8,9 +9,9 @@ import pygame
 from pygame.locals import *
 
 
-class Scene():
+class Scene(AbstractScene):
     def __init__(self, screen):
-        self.screen = screen
+        super(Scene, self).__init__(screen)
         self.player = None
         self.beginPlatform = None
         self.endPlatform = None
