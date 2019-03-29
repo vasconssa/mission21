@@ -6,12 +6,15 @@ Also contained here are resource loading functions.
 import os
 import pygame as pg
 
+from source import state_machine
+
+
 TIME_PER_UPDATE = 16.0  #Milliseconds
 
 
 class Control(object):
     """
-    Control class for en tire project. Contains the game loop, and contains
+    Control class for entire project. Contains the game loop, and contains
     the event_loop which passes events to States as needed.
     """
     def __init__(self, caption):
@@ -23,7 +26,7 @@ class Control(object):
         self.fps_visible = True
         self.now = 0.0
         self.keys = pg.key.get_pressed()
-        # self.state_machine = state_machine.StateMachine()
+        self.state_machine = state_machine.StateMachine()
 
     def update(self):
         """
@@ -286,6 +289,7 @@ def cursor_from_image(image,size,hotspot,location=(0,0),flip=False):
     cursor that will represent the mouse position; location is a 2-tuple for
     where your cursor is located on the passed in image. Setting flip to True
     will create the cursor with colors opposite to the source image.
+
     Color in image to color in cursor defaults:
         Black (  0,   0,   0) ---> Black
         White (255, 255, 255) ---> White
