@@ -10,7 +10,7 @@ from pygame.locals import *
 from sys import exit
 from Utils import Utils
 
-from source.components.planet import Planet
+from components.planet import Planet
 
 class Teste():
     def launch(self,screen):

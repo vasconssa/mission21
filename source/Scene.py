@@ -5,10 +5,10 @@ from RigidBody import RigidBody
 from Player import Player
 from EventHandler import EventHandler
 from Vector2D import Vector2D
-from source.components import platform
+from components import platform
 import pygame
 from pygame.locals import *
-from source import prepare,tools
+import prepare,tools
 
 
 class Scene(AbstractScene):

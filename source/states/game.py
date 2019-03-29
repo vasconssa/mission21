@@ -10,10 +10,10 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from Utils import Utils
-from source import prepare
+import prepare
 
 
-from source import state_machine
+import state_machine
 class Game(state_machine._State):
     """This State is updated while our game shows the splash screen."""
     def __init__(self):

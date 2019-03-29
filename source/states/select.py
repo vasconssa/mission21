@@ -2,7 +2,7 @@
 
 
 import pygame as pg
-from source import state_machine,prepare,menu_helpers
+import state_machine,prepare,menu_helpers
 
 
 FONT = pg.font.Font(prepare.FONTS["military_font_7"], 60) ###

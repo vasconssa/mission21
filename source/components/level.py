@@ -3,7 +3,7 @@ import sys
 import pygame as pg
 
 from operator import attrgetter
-from source import prepare, tools
+import prepare, tools
 # from . import enemy_sprites, item_sprites
 
 if sys.version_info[0] < 3:

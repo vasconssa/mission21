@@ -4,7 +4,7 @@ Contains useful functionality for uni- and bi-directional menus.
 
 import pygame as pg
 
-from source import prepare, state_machine
+import prepare, state_machine
 
 
 class BasicMenu(state_machine._State):

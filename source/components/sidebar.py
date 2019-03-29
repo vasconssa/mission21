@@ -1,6 +1,6 @@
 import pygame as pg
 
-from source import prepare, tools
+import prepare, tools
 
 
 # Todo: Fita editar para mostrar hud da nave

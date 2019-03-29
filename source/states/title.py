@@ -1,7 +1,7 @@
 # Imagem inicial do jogo
 
 import pygame as pg
-from source import state_machine,tools,prepare
+import state_machine,tools,prepare
 
 
 SCROLL_SPEED = 2

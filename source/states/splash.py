@@ -6,7 +6,7 @@ The splash screen of the game. The first thing the user sees.
 
 import pygame as pg
 
-from .. import prepare, state_machine
+import prepare, state_machine
 
 
 class Splash(state_machine._State):

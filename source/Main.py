@@ -1,10 +1,10 @@
 import pygame
 import os
-from source.Utils import Utils as Utils,ASSETS_PATH
-from source.test import Teste
-from source import prepare
-from source import tools
-from source.states import title,splash,select,game
+from Utils import Utils as Utils,ASSETS_PATH
+from test import Teste
+import prepare
+import tools
+from states import title,splash,select,game
 
 app = tools.Control(prepare.ORIGINAL_CAPTION)
 state_dict = {"SPLASH"   : splash.Splash(),

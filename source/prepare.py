@@ -6,7 +6,7 @@ Also contained are various constants used throughout the program.
 import os
 import pygame as pg
 
-from source import tools
+import tools
 
 
 pg.init()

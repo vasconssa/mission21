@@ -5,7 +5,7 @@ from math import *
 import pygame
 from pygame.locals import *
 from abc import ABC, ABCMeta, abstractmethod
-from source import prepare
+import prepare
 
 class InputHandler:
     def __init__(self):

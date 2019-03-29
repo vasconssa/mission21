@@ -6,7 +6,7 @@ Also contained here are resource loading functions.
 import os
 import pygame as pg
 
-from source import state_machine
+import state_machine
 
 
 TIME_PER_UPDATE = 16.0  #Milliseconds

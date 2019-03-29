@@ -1,4 +1,4 @@
-from source import GameObject
+import GameObject
 
 
 

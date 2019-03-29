@@ -1,8 +1,8 @@
 
-from source import GameObject,RigidBody
+import GameObject,RigidBody
 
 
-class Planet(GameObject.GameObject,RigidBody.RigidBody):
+class Planet(RigidBody.RigidBody):
 
     def collide_with_player(self,player):
         print("Colisão com planeta")
