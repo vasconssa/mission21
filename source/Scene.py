@@ -34,7 +34,8 @@ class Scene(AbstractScene):
         self.planetGroup.add(planet)
 
     def createPlayer(self):
-        player = Player((30, 450))
+        screenW, screenH = self.screen.get_size()
+        player = Player((10, screenH/2.0))
         player.surf = self.screen
         player.planets = self.planets
         self.player = player
@@ -42,9 +43,18 @@ class Scene(AbstractScene):
 
     def addPlatforms(self):
         begin = pygame.image.load("../assets/base.png").convert_alpha()
+        rect = begin.get_rect()
+        w, h = rect.width, rect.height
+        begin = pygame.transform.scale(begin, (floor(0.2*w), floor(0.2*h)))
         end = pygame.image.load("../assets/base.png").convert_alpha()
-        self.beginPlatform = GameObject("PlataformaInicial", begin, (30, 450))
-        self.endPlatform = GameObject("PlataformaFinal", end, (830, 450))
+        rect = end.get_rect()
+        w, h = rect.width, rect.height
+        end = pygame.transform.scale(end, (floor(0.2*w), floor(0.2*h)))
+        rect = end.get_rect()
+        w, h = rect.width, rect.height
+        screenW, screenH = self.screen.get_size()
+        self.beginPlatform = GameObject("PlataformaInicial", begin, (w/2.0, screenH/2.0))
+        self.endPlatform = GameObject("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0))
         self.platformGroup.add(self.beginPlatform)
         self.platformGroup.add(self.endPlatform)
 
