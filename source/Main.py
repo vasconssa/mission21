@@ -1,7 +1,7 @@
 import pygame
 import os
-from source.Utils import Utils as Utils,ASSETS_PATH
-from source.test import Teste
+from Utils import Utils as Utils,ASSETS_PATH
+from test import Teste
 # Game Initialization
 pygame.init()
 
