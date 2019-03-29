@@ -14,5 +14,8 @@ class EventHandler:
             pygame.quit()
             exit()
         elif evType == KEYDOWN or evType == KEYUP:
-            player.handleInput(event)
+            try:
 
+                player.handleInput(event)
+            except:
+                a = "teste"

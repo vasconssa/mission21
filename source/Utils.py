@@ -10,11 +10,13 @@ class Utils(object):
     DISPLAY_HEIGHT = 700
 
 
-class IMG_PATH:
+class ASSETS_PATH:
 
     BACKGROUND_IMG_PATH =  '../assets/tela_inicial.png'
 
     START_IMG_PATH = '../assets/start.png'
+
+    START_MENU_FONT_PATH = "../assets/military_font_7.ttf"
 
 
 
