@@ -10,6 +10,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from Utils import Utils
+from source import prepare
 
 
 from source import state_machine
@@ -28,7 +29,7 @@ class Game(state_machine._State):
         # player = Player((50,50))
         # planets = []
 
-        planeta = pygame.image.load("../assets/greenPlanet.png").convert_alpha()
+        planeta = prepare.GFX["assets"]['greenPlanet'].convert_alpha()
         rect = planeta.get_rect()
         w, h = rect.width, rect.height
         planeta = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
@@ -60,7 +61,7 @@ class Game(state_machine._State):
 
 
     def draw(self, surface, interpolate):
-        self.scene.draw()
+        self.scene.draw(surface)
 
 
     def get_event(self, event):

@@ -7,6 +7,7 @@ from EventHandler import EventHandler
 from Vector2D import Vector2D
 import pygame
 from pygame.locals import *
+from source import prepare
 
 
 class Scene(AbstractScene):
@@ -25,7 +26,7 @@ class Scene(AbstractScene):
         self.createBackgrond()
 
     def createBackgrond(self):
-        self.background = pygame.image.load("../assets/background.png").convert()
+        self.background = prepare.GFX['assets']['background'].convert()
         self.background = pygame.transform.scale(self.background, (1200, 900))
 
 
@@ -42,11 +43,11 @@ class Scene(AbstractScene):
         self.playerGroup.add(self.player)
 
     def addPlatforms(self):
-        begin = pygame.image.load("../assets/base.png").convert_alpha()
+        begin = prepare.GFX["assets"]['base'].convert_alpha()
         rect = begin.get_rect()
         w, h = rect.width, rect.height
         begin = pygame.transform.scale(begin, (floor(0.2*w), floor(0.2*h)))
-        end = pygame.image.load("../assets/base.png").convert_alpha()
+        end = prepare.GFX["assets"]['base'].convert_alpha()
         rect = end.get_rect()
         w, h = rect.width, rect.height
         end = pygame.transform.scale(end, (floor(0.2*w), floor(0.2*h)))
@@ -62,10 +63,16 @@ class Scene(AbstractScene):
         self.player.dt = dt
         self.player.update()
 
-    def draw(self):
-        self.screen.blit(self.background, (0,0))
-        self.platformGroup.draw(self.screen)
-        self.playerGroup.draw(self.screen)
-        self.planetGroup.draw(self.screen)
+    def draw(self,surface):
+        surface.blit(self.background, (0,0))
+        # self.platformGroup.draw(self.screen)
+        # self.playerGroup.draw(self.screen)
+        # self.planetGroup.draw(self.screen)
+        self.platformGroup.draw(surface)
+        self.playerGroup.draw(surface)
+        self.planetGroup.draw(surface)
+
+
+
         
 
