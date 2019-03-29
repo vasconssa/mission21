@@ -69,4 +69,8 @@ class RigidBody(GameObject):
     def update(self, dt, planets):
         self.pos, self.vel = self.integrator.integrate(self.pos, self.vel, self.heading, 0.0, dt, planets, self.internalForce)
         super(RigidBody, self).update()
+
+    def collide_with_player(self, player):
+        super(RigidBody,self).collide_with_player(player)
+        pass
     

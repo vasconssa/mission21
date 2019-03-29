@@ -5,6 +5,7 @@ from math import *
 import pygame
 from pygame.locals import *
 from abc import ABC, ABCMeta, abstractmethod
+from source import prepare
 
 class InputHandler:
     def __init__(self):
@@ -108,6 +109,8 @@ class Player(RigidBody):
         self.rotateAngle = 0
         self.dt = 30/100.0
         self.planets = None
+        self.mask = self.make_mask()
+
 
 
     def setForce(self, power):
@@ -122,6 +125,37 @@ class Player(RigidBody):
     def update(self):
         self.rotate(self.rotateAngle)
         super(Player, self).update(self.dt, self.planets)
+
+    def reset(self):
+        #TODO melhorar
+        self.health = prepare.MAX_HEALTH
+
+
+    def make_mask(self):
+        """Create a collision mask for the player."""
+        #TODO melhorar essa máscara
+        temp = pygame.Surface((prepare.CELL_SIZE)).convert_alpha()
+        temp.fill((0, 0, 0, 0))
+        temp.fill(pygame.Color("white"), (10, 20, 30, 30))
+        return pygame.mask.from_surface(temp)
+
+
+    def collide_with_solid(self, cancel_knock=True):
+        """Called from level when the player walks into a solid tile."""
+        #TODO aqui entra a animação de explosão
+        print("Colision")
+
+
+    def got_hit(self, enemy):
+        """Called on collision with enemy."""
+        if not self.hit_state:
+            damage = max(enemy.attack-self.defense, 1)
+            self.health = max(self.health-damage, 0)
+            self.hit_state = tools.Timer(50, 10)
+            knock_dir = self.get_collision_direction(enemy)
+            self.knock_state = (knock_dir, tools.Timer(100, 1))
+
+
 
     # def render(self, screen):
         # selfrender(screen)

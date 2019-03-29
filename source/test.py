@@ -10,6 +10,7 @@ from pygame.locals import *
 from sys import exit
 from Utils import Utils
 
+from source.components.planet import Planet
 
 class Teste():
     def launch(self,screen):
@@ -23,9 +24,12 @@ class Teste():
         rect = planeta.get_rect()
         w, h = rect.width, rect.height
         planeta = pygame.transform.scale(planeta, (floor(0.3*w), floor(0.3*h)))
-        planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
+        # planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
+
+        planet = Planet("teste2", planeta, 100001.0, (600, 450), 150.0)
         scene = Scene(screen)
         scene.addPlanet(planet)
+
 
         # planets.append(planet1)
         clock = pygame.time.Clock()

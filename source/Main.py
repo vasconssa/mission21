@@ -16,6 +16,8 @@ state_dict = {"SPLASH"   : splash.Splash(),
               # "CAMP"     : camp.Camp()
               }
 app.state_machine.setup_states(state_dict, "SPLASH")
+
+
 app.main()
 
 

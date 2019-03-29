@@ -60,5 +60,7 @@ class GameObject(pygame.sprite.Sprite):
         self.image = self.rotateAroundCenter(self.imageAngle, self.surf)
         # self.rect.center =  (x - width/2.0, y - height/2.0)
 
-
+    def collide_with_player(self,player):
+        print("Colisão")
+        pass
 

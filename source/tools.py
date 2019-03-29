@@ -78,6 +78,10 @@ class Control(object):
         while not self.done:
             lag += self.clock.tick(self.fps)
             self.event_loop()
+            # while lag >= TIME_PER_UPDATE:
+            #     self.update()
+            #     lag -= TIME_PER_UPDATE
+
             while lag >= TIME_PER_UPDATE:
                 self.update()
                 lag -= TIME_PER_UPDATE

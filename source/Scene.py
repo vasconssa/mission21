@@ -5,9 +5,10 @@ from RigidBody import RigidBody
 from Player import Player
 from EventHandler import EventHandler
 from Vector2D import Vector2D
+from source.components import platform
 import pygame
 from pygame.locals import *
-from source import prepare
+from source import prepare,tools
 
 
 class Scene(AbstractScene):
@@ -54,14 +55,18 @@ class Scene(AbstractScene):
         rect = end.get_rect()
         w, h = rect.width, rect.height
         screenW, screenH = self.screen.get_size()
-        self.beginPlatform = GameObject("PlataformaInicial", begin, (w/2.0, screenH/2.0))
-        self.endPlatform = GameObject("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0))
+        # self.beginPlatform = GameObject("PlataformaInicial", begin, (w/2.0, screenH/2.0))
+        # self.endPlatform = GameObject("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0))
+        self.beginPlatform = platform.Platform("PlataformaInicial", begin, (w/2.0, screenH/2.0))
+        self.endPlatform = platform.Platform("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0),True)
         self.platformGroup.add(self.beginPlatform)
         self.platformGroup.add(self.endPlatform)
 
     def update(self, dt):
+        self.check_collisions()
         self.player.dt = dt
         self.player.update()
+
 
     def draw(self,surface):
         surface.blit(self.background, (0,0))
@@ -73,6 +78,17 @@ class Scene(AbstractScene):
         self.planetGroup.draw(surface)
 
 
-
+    def check_collisions(self):
+        print("Checa colisões")
+        """
+                Check collisions and call the appropriate functions of the affected
+                sprites.
+                """
+        callback = tools.rect_then_mask
+        groups = pygame.sprite.Group(self.planetGroup, self.platformGroup)
+        hits = pygame.sprite.spritecollide(self.player, groups, False, callback)
+        for hit in hits:
+            hit.collide_with_player(self.player)
+        # self.process_attacks()
         
 
