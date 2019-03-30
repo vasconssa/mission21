@@ -35,6 +35,12 @@ class CircleProgressBar:
 
     def draw(self, surface):
         finalAngle = self.percentage*2*pi/100.0
+        text = str(self.percentage) + "%"
+        font = pygame.font.Font(self.font, 40)
+        tw, th = font.size(text)
+        text = font.render(text, True, self.color)
+        tx, ty = self.pos[0] - tw/2.0, self.pos[1] - th/2.0
+        surface.blit(text, (tx, ty))
         gray = (121, 127, 137)
         width = 15.0
         prec = 150
