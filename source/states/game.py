@@ -11,9 +11,9 @@ from pygame.locals import *
 from sys import exit
 from Utils import Utils
 import prepare
-
-
 import state_machine
+from CircleProgressBar import CircleProgressBar
+
 class Game(state_machine._State):
     """This State is updated while our game shows the splash screen."""
     def __init__(self):
@@ -21,6 +21,7 @@ class Game(state_machine._State):
         self.scene = Scene(pygame.display.get_surface())
         self.clock = pygame.time.Clock()
         self.eventHandler = EventHandler()
+        self.prog = None
 
     def startup(self, now, persistant):
         # pygame.init()
@@ -35,6 +36,7 @@ class Game(state_machine._State):
         planeta = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
         planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
         self.scene.addPlanet(planet)
+        self.prog = CircleProgressBar((150, 150))
 
         # planets.append(planet1)
 
@@ -57,11 +59,13 @@ class Game(state_machine._State):
         # planet1.render(screen)
         # player.render(screen)
         self.scene.update(dt)
+        self.prog.setPercentage(50)
         # pygame.display.flip()
 
 
     def draw(self, surface, interpolate):
         self.scene.draw(surface)
+        self.prog.draw(surface)
 
 
     def get_event(self, event):
