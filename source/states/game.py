@@ -13,12 +13,14 @@ from Utils import Utils
 import prepare
 import state_machine
 from CircleProgressBar import CircleProgressBar
+from SceneManager import SceneManager
 
 class Game(state_machine._State):
     """This State is updated while our game shows the splash screen."""
     def __init__(self):
         state_machine._State.__init__(self)
-        self.scene = Scene(pygame.display.get_surface())
+        self.scenes = SceneManager(pygame.display.get_surface()).scenes
+        self.scene = self.scenes[0]
         self.clock = pygame.time.Clock()
         self.eventHandler = EventHandler()
         self.prog = None
@@ -30,12 +32,12 @@ class Game(state_machine._State):
         # player = Player((50,50))
         # planets = []
 
-        planeta = prepare.GFX["assets"]['greenPlanet'].convert_alpha()
-        rect = planeta.get_rect()
-        w, h = rect.width, rect.height
-        planeta = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
-        planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
-        self.scene.addPlanet(planet)
+        # planeta = prepare.GFX["assets"]['greenPlanet'].convert_alpha()
+        # rect = planeta.get_rect()
+        # w, h = rect.width, rect.height
+        # planeta = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
+        # planet = RigidBody("teste2", planeta, 100001.0, (600, 450), 150.0)
+        # self.scene.addPlanet(planet)
         self.prog = CircleProgressBar((150, 150))
 
         # planets.append(planet1)
