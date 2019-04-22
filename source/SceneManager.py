@@ -10,6 +10,7 @@ import pygame
 from pygame.locals import *
 import prepare,tools
 from Scene import Scene
+from source.components.planet import Planet
 
 class SceneManager:
     def __init__(self, screen):
@@ -28,7 +29,7 @@ class SceneManager:
         x = 0.5
         y = 0.5
         screenCoord = self.coord2Screen(x,y)
-        planet = RigidBody("teste2", planeta, 100001.0, screenCoord, 150.0)
+        planet = Planet("teste2", planeta, 100001.0, screenCoord, 150.0)
         scene1.addPlanet(planet)
 
         self.scenes.append(scene1)

@@ -87,8 +87,8 @@ class ImageMap:
     def __init__(self):
         self.images = {}
 
-    def addImage(self, key, imagePath):
-        image = pygame.image.load(imagePath).convert_alpha()
+    def addImage(self, key, imageName):
+        image = prepare.GFX["assets"][imageName].convert_alpha()
         image = pygame.transform.scale(image, (60, 60))
         image = pygame.transform.rotate(image, -90)
         self.images[key] = image
@@ -97,11 +97,18 @@ class Player(RigidBody):
 
     def __init__(self, initialPos):
         self.imageMap = ImageMap()
-        self.imageMap.addImage("normal", "../assets/spaceShip.png")
-        self.imageMap.addImage("fwd", "../assets/spaceShipFwd.png")
-        self.imageMap.addImage("rvs", "../assets/spaceShipRv.png")
-        self.imageMap.addImage("left", "../assets/spaceShipLft.png")
-        self.imageMap.addImage("right", "../assets/spaceShipRgt.png")
+        # self.imageMap.addImage("normal", "../assets/spaceShip.png")
+        # self.imageMap.addImage("fwd", "../assets/spaceShipFwd.png")
+        # self.imageMap.addImage("rvs", "../assets/spaceShipRv.png")
+        # self.imageMap.addImage("left", "../assets/spaceShipLft.png")
+        # self.imageMap.addImage("right", "../assets/spaceShipRgt.png")
+
+        self.imageMap.addImage("normal", "spaceShip")
+        self.imageMap.addImage("fwd", "spaceShipFwd")
+        self.imageMap.addImage("rvs", "spaceShipRv")
+        self.imageMap.addImage("left", "spaceShipLft")
+        self.imageMap.addImage("right", "spaceShipRgt")
+
         pos = (initialPos[0], initialPos[1])
         super(Player, self).__init__("Player", self.imageMap.images["normal"], 1.0, pos, 1.0)
         self.inputHandler = InputHandler()
