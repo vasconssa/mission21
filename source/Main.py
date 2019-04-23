@@ -4,6 +4,16 @@ from Utils import Utils as Utils,ASSETS_PATH
 from test import Teste
 import prepare
 import tools
+from states import title,splash,select,game
+
+def __configure_sound():
+    pygame.mixer.init()
+    player = prepare.MUSIC["music_background"]
+    player = pygame.mixer.Sound(player)
+    player.play(-1)
+
+__configure_sound()
+
 from states import title,splash,select,game, win_screen
 app = tools.Control(prepare.ORIGINAL_CAPTION)
 state_dict = {"SPLASH"   : splash.Splash(),
@@ -18,8 +28,6 @@ app.state_machine.setup_states(state_dict, "SPLASH")
 
 
 app.main()
-
-
 
 
 

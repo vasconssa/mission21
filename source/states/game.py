@@ -14,7 +14,7 @@ import prepare
 import state_machine
 from CircleProgressBar import CircleProgressBar
 from SceneManager import SceneManager
-from source import menu_helpers
+import menu_helpers
 import math
 
 
