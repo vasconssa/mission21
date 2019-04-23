@@ -2,6 +2,7 @@ from AbstractScene import AbstractScene
 from GameObject import GameObject
 from math import *
 from RigidBody import RigidBody
+from Predictor import Predictor
 from Player import Player
 from EventHandler import EventHandler
 from Vector2D import Vector2D
@@ -27,6 +28,7 @@ class Scene(AbstractScene):
         self.addPlatforms()
         self.createBackgrond()
         self.hud = Hud()
+        self.predictor = Predictor()
 
     def createBackgrond(self):
         self.background = prepare.GFX['assets']['background'].convert()
@@ -70,6 +72,7 @@ class Scene(AbstractScene):
 
             self.player.dt = dt
             self.player.update()
+            self.predictor.trajectory(self.player)
             fuel = self.player.fuel
             score = self.hud.score
             if self.player.ignite:
@@ -85,6 +88,7 @@ class Scene(AbstractScene):
         # self.planetGroup.draw(self.screen)
         self.platformGroup.draw(surface)
         self.playerGroup.draw(surface)
+        self.predictor.draw(surface)
         self.planetGroup.draw(surface)
         self.hud.draw(surface)
 
