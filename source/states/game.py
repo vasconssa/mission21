@@ -18,7 +18,7 @@ import menu_helpers
 import math
 
 
-LAST_LEVEL = 1
+LAST_LEVEL = 3
 
 SMALL_FONT = pygame.font.Font(prepare.FONTS["military_font_7"], 32) ###
 
@@ -103,6 +103,10 @@ class Game(state_machine._State):
 
     def draw(self, surface, interpolate):
         self.scene.draw(surface)
+        if not self.scene.player.alive:
+            expGroup = pygame.sprite.Group()
+            expGroup.add(self.scene.player.death_anim)
+            expGroup.draw(surface)
         if (not self.scene.player.alive or self.scene.player.final):
             if(self.iris):
 

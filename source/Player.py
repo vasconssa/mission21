@@ -14,8 +14,8 @@ class InputHandler:
     def __init__(self):
         self.command = 0
         self.commands = {
-                K_LEFT : RotateLeftCommnad(0.5),
-                K_RIGHT: RotateRightCommnad(0.5),
+                K_LEFT : RotateLeftCommnad(1.5),
+                K_RIGHT: RotateRightCommnad(1.5),
                 K_UP: ForwardThrustCommand(50),
                 K_DOWN: ReverseThrustCommand(50)
         }
@@ -149,14 +149,15 @@ class Player(RigidBody):
         if self.alive:
             self.rotate(self.rotateAngle)
 
-            if self.ignite:
+            if not self.ignite:
+                super(Player, self).update(self.dt, [])
+            else:
                 super(Player, self).update(self.dt, self.planets)
             if self.internalForce != 0:
                 self.ignite = True
                 self.fuel -= 0.1
 
                 self.rotate(self.rotateAngle)
-                super(Player, self).update(self.dt, self.planets)
         else:
             if self.death_anim is not None:
                 self.death_anim.update()
@@ -185,6 +186,7 @@ class Player(RigidBody):
         #TODO aqui entra a animação de explosão
         if not self.alive :
             self.death_anim = Explosion(self.rect.center)
+            self.death_anim.done = True
         elif self.final:
             pass
 

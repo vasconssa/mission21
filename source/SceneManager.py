@@ -71,6 +71,7 @@ class SceneManager:
         scene3.addPlanet(planetfase3)
 
         self.scenes.append(scene3)
+        self.scenes.append(scene3)
 
 
     def coord2Screen(self, x, y):
