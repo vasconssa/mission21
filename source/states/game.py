@@ -14,7 +14,7 @@ import prepare
 import state_machine
 from CircleProgressBar import CircleProgressBar
 from SceneManager import SceneManager
-from source import menu_helpers
+import menu_helpers
 import math
 
 SMALL_FONT = pygame.font.Font(prepare.FONTS["military_font_7"], 32) ###
