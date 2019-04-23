@@ -12,6 +12,7 @@ import prepare,tools
 from Scene import Scene
 from components.planet import Planet
 
+
 class SceneManager:
     def __init__(self, screen):
         self.scenes = []

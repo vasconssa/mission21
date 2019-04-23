@@ -10,7 +10,7 @@ import pygame
 from pygame.locals import *
 from Hud import Hud
 import prepare,tools
-
+from source import prepare
 
 class Scene(AbstractScene):
     def __init__(self, screen):
@@ -65,7 +65,7 @@ class Scene(AbstractScene):
         self.platformGroup.add(self.endPlatform)
 
     def update(self, dt):
-        if(self.player.alive):
+        if(self.player.alive and not self.player.final):
             self.check_collisions()
 
             self.player.dt = dt
@@ -76,6 +76,7 @@ class Scene(AbstractScene):
                 score -= 1
             self.hud.updateScore(score)
             self.hud.updateFuel(fuel)
+
 
 
     def draw(self,surface):
@@ -100,6 +101,10 @@ class Scene(AbstractScene):
         hits = pygame.sprite.spritecollide(self.player, groups, False, callback)
         for hit in hits:
             hit.collide_with_player(self.player)
+        if (self.player.rect.top>prepare.SCREEN_SIZE[1] or self.player.rect.right>prepare.SCREEN_SIZE[0] or self.player.rect.bottom<0):
+            self.player.alive=False
+
+            pass
         # self.process_attacks()
         
 
