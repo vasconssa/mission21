@@ -6,7 +6,7 @@ class Hud:
     def __init__(self):
         self.progBar = None
         self.color = (39, 95, 188)
-        self.score = 10000
+        self.score = 100000
         self.createHud()
         self.font = prepare.FONTS["military_font_7"]
 

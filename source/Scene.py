@@ -69,6 +69,10 @@ class Scene(AbstractScene):
         self.player.dt = dt
         self.player.update()
         fuel = self.player.fuel
+        score = self.hud.score
+        if self.player.ignite:
+            score -= 1
+        self.hud.updateScore(score)
         self.hud.updateFuel(fuel)
 
 
