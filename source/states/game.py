@@ -41,12 +41,10 @@ class Game(state_machine._State):
         self.scene = self.scenes[0]
         self.clock = pygame.time.Clock()
         self.eventHandler = EventHandler()
-        self.prog = None
         self.iris = None
 
         self.play_again = None
 
-        self.prog = CircleProgressBar((150, 150))
 
         # planets.append(planet1)
 
@@ -72,7 +70,6 @@ class Game(state_machine._State):
         # planet1.render(screen)
         # player.render(screen)
         self.scene.update(dt)
-        self.prog.setPercentage(50)
 
         if not self.scene.player.alive:
             self.update_on_death()
@@ -83,7 +80,6 @@ class Game(state_machine._State):
 
     def draw(self, surface, interpolate):
         self.scene.draw(surface)
-        self.prog.draw(surface)
         if not self.scene.player.alive and self.iris:
             self.iris.draw(surface)
             if self.iris.done:

@@ -9,5 +9,6 @@ class Planet(RigidBody.RigidBody):
         print("Derrota")
         player.collide_with_solid()
 
+
     def __init__(self, name, image, mass, pos, G):
         RigidBody.RigidBody.__init__(self, name, image, mass, pos, G)

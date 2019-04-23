@@ -65,15 +65,17 @@ class Scene(AbstractScene):
         self.platformGroup.add(self.endPlatform)
 
     def update(self, dt):
-        self.check_collisions()
-        self.player.dt = dt
-        self.player.update()
-        fuel = self.player.fuel
-        score = self.hud.score
-        if self.player.ignite:
-            score -= 1
-        self.hud.updateScore(score)
-        self.hud.updateFuel(fuel)
+        if(self.player.alive):
+            self.check_collisions()
+
+            self.player.dt = dt
+            self.player.update()
+            fuel = self.player.fuel
+            score = self.hud.score
+            if self.player.ignite:
+                score -= 1
+            self.hud.updateScore(score)
+            self.hud.updateFuel(fuel)
 
 
     def draw(self,surface):

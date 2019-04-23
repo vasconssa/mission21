@@ -218,8 +218,9 @@ class Explosion(pygame.sprite.Sprite):
         if now - self.last_update > self.frame_rate:
             self.last_update = now
             self.frame += 1
-            if self.frame == len(Explosion.explosion_anim):
+            if self.frame >= len(Explosion.explosion_anim):
                 self.kill()
+                self.done = True
             else:
                 center = self.rect.center
                 self.image = Explosion.explosion_anim[self.frame]
