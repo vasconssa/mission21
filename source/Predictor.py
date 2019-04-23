@@ -15,10 +15,10 @@ class Predictor:
         internalForce = player.internalForce
         pos = player.pos
         vel = player.vel
-        dt = 15*player.dt
+        dt = 15*6*player.dt
         heading = player.heading
         planets = player.planets
-        steps = 30
+        steps = 5
         self.trajPoints = []
         for i in range(steps):
             pos, vel = self.integrator.integrate(pos, vel, heading, 0.0, dt, planets, internalForce)

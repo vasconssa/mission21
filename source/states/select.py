@@ -8,7 +8,9 @@ import state_machine,prepare,menu_helpers
 FONT = pg.font.Font(prepare.FONTS["military_font_7"], 60) ###
 SMALL_FONT = pg.font.Font(prepare.FONTS["military_font_7"], 32) ###
 
-OPTIONS = ["START","CHOOSE MAP", "OPTIONS", "QUIT"]
+OPTIONS = ["START", "QUIT"]
+#OPTIONS = ["START","CHOOSE MAP", "OPTIONS", "QUIT"]
+
 HIGHLIGHT_COLOR = (108, 148, 136)
 
 #Placement and spacing constants.
