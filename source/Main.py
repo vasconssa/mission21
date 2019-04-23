@@ -6,6 +6,13 @@ import prepare
 import tools
 from states import title,splash,select,game
 
+def __configure_sound(self):
+    pygame.mixer.init()
+    player = pygame.mixer.Sound('./Audio/music_background.wav')
+    player.play(-1)
+
+__configure_sound()
+
 app = tools.Control(prepare.ORIGINAL_CAPTION)
 state_dict = {"SPLASH"   : splash.Splash(),
               "TITLE"    : title.Title(),
@@ -16,6 +23,8 @@ state_dict = {"SPLASH"   : splash.Splash(),
               # "CAMP"     : camp.Camp()
               }
 app.state_machine.setup_states(state_dict, "SPLASH")
+
+
 
 
 app.main()
