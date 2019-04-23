@@ -113,6 +113,8 @@ class Player(RigidBody):
         super(Player, self).__init__("Player", self.imageMap.images["normal"], 1.0, pos, 1.0)
         self.inputHandler = InputHandler()
         self.power = 0
+        self.ignite = False
+        self.fuel = 100.0
         self.rotateAngle = 0
         self.dt = 30/100.0
         self.planets = None
@@ -131,7 +133,11 @@ class Player(RigidBody):
 
     def update(self):
         self.rotate(self.rotateAngle)
-        super(Player, self).update(self.dt, self.planets)
+        if self.ignite:
+            super(Player, self).update(self.dt, self.planets)
+        if self.internalForce != 0:
+            self.ignite = True
+            self.fuel -= 0.1
 
     def reset(self):
         #TODO melhorar
