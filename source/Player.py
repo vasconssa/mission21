@@ -186,6 +186,7 @@ class Player(RigidBody):
         #TODO aqui entra a animação de explosão
         if not self.alive :
             self.death_anim = Explosion(self.rect.center)
+            self.death_anim.done = True
         elif self.final:
             pass
 
