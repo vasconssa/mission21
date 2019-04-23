@@ -8,6 +8,9 @@ import pygame as pg
 
 import tools
 
+from source.Player import Explosion
+
+
 
 pg.init()
 
@@ -108,6 +111,8 @@ def graphics_from_directories(directories):
     return GFX
 
 
+
 # _SUB_DIRECTORIES = ["enemies", "equips", "mapsheets", "misc", "objects"]
 #TODO melhorar issos
 GFX = graphics_from_directories(["assets"])
+
