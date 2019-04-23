@@ -6,11 +6,11 @@ from math import pi
 import math
 
 class CircleProgressBar:
-    def __init__(self, pos=(0, 0)):
+    def __init__(self, pos=(0, 0), width=100, height=100):
         self.color = (39, 95, 188)
-        self.percentage = 50
+        self.percentage = 50.0
         self.pos = pos
-        self.rect = Rect(0,0,150,150)
+        self.rect = Rect(0,0,100,100)
         self.rect.centerx = pos[0]
         self.rect.centery = pos[1]
         self.font = prepare.FONTS["military_font_7"]
@@ -18,7 +18,7 @@ class CircleProgressBar:
     def setPercentage(self, value):
         self.percentage = value
 
-    def calcCirclePoints(self,center, finalAngle, radius=150.0):
+    def calcCirclePoints(self,center, finalAngle, radius=120.0):
         points = []
         start = pi/2
         final = pi/2 + finalAngle
@@ -35,7 +35,7 @@ class CircleProgressBar:
 
     def draw(self, surface):
         finalAngle = self.percentage*2*pi/100.0
-        text = str(self.percentage) + "%"
+        text = str(round(self.percentage, 3)) + "%"
         font = pygame.font.Font(self.font, 40)
         tw, th = font.size(text)
         text = font.render(text, True, self.color)
@@ -45,7 +45,7 @@ class CircleProgressBar:
         width = 15.0
         prec = 150
         step = width/prec
-        radius = 100.0
+        radius = 080.0
         pygame.draw.circle(surface, gray, self.pos, int(radius), 15)
         for i in range(prec):
             points = self.calcCirclePoints(self.pos, finalAngle, radius)

@@ -8,6 +8,7 @@ from Vector2D import Vector2D
 from components import platform
 import pygame
 from pygame.locals import *
+from Hud import Hud
 import prepare,tools
 
 
@@ -25,6 +26,7 @@ class Scene(AbstractScene):
         self.createPlayer()
         self.addPlatforms()
         self.createBackgrond()
+        self.hud = Hud()
 
     def createBackgrond(self):
         self.background = prepare.GFX['assets']['background'].convert()
@@ -47,11 +49,11 @@ class Scene(AbstractScene):
         begin = prepare.GFX["assets"]['base'].convert_alpha()
         rect = begin.get_rect()
         w, h = rect.width, rect.height
-        begin = pygame.transform.scale(begin, (floor(0.2*w), floor(0.2*h)))
+        begin = pygame.transform.scale(begin, (floor(0.15*w), floor(0.15*h)))
         end = prepare.GFX["assets"]['base'].convert_alpha()
         rect = end.get_rect()
         w, h = rect.width, rect.height
-        end = pygame.transform.scale(end, (floor(0.2*w), floor(0.2*h)))
+        end = pygame.transform.scale(end, (floor(0.15*w), floor(0.15*h)))
         rect = end.get_rect()
         w, h = rect.width, rect.height
         screenW, screenH = self.screen.get_size()
@@ -66,6 +68,12 @@ class Scene(AbstractScene):
         self.check_collisions()
         self.player.dt = dt
         self.player.update()
+        fuel = self.player.fuel
+        score = self.hud.score
+        if self.player.ignite:
+            score -= 1
+        self.hud.updateScore(score)
+        self.hud.updateFuel(fuel)
 
 
     def draw(self,surface):
@@ -76,6 +84,7 @@ class Scene(AbstractScene):
         self.platformGroup.draw(surface)
         self.playerGroup.draw(surface)
         self.planetGroup.draw(surface)
+        self.hud.draw(surface)
 
 
     def check_collisions(self):

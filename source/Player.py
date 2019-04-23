@@ -91,7 +91,7 @@ class ImageMap:
         self.images = {}
 
     def addImage(self, key, imageName):
-        image = prepare.GFX["assets"][imageName]
+        image = prepare.GFX["assets"][imageName].convert_alpha()
         image = pygame.transform.scale(image, (60, 60))
         image = pygame.transform.rotate(image, -90)
         self.images[key] = image
@@ -103,6 +103,11 @@ class Player(RigidBody):
         self.alive = True
 
         self.imageMap = ImageMap()
+        # self.imageMap.addImage("normal", "../assets/spaceShip.png")
+        # self.imageMap.addImage("fwd", "../assets/spaceShipFwd.png")
+        # self.imageMap.addImage("rvs", "../assets/spaceShipRv.png")
+        # self.imageMap.addImage("left", "../assets/spaceShipLft.png")
+        # self.imageMap.addImage("right", "../assets/spaceShipRgt.png")
 
         self.imageMap.addImage("normal", "spaceShip")
         self.imageMap.addImage("fwd", "spaceShipFwd")
@@ -114,6 +119,8 @@ class Player(RigidBody):
         super(Player, self).__init__("Player", self.imageMap.images["normal"], 1.0, pos, 1.0)
         self.inputHandler = InputHandler()
         self.power = 0
+        self.ignite = False
+        self.fuel = 100.0
         self.rotateAngle = 0
         self.dt = 30/100.0
         self.planets = None
@@ -135,6 +142,12 @@ class Player(RigidBody):
         self.inputHandler.handle(self, event)
 
     def update(self):
+        self.rotate(self.rotateAngle)
+        if self.ignite:
+            super(Player, self).update(self.dt, self.planets)
+        if self.internalForce != 0:
+            self.ignite = True
+            self.fuel -= 0.1
         if self.alive:
             self.rotate(self.rotateAngle)
             super(Player, self).update(self.dt, self.planets)
@@ -157,18 +170,13 @@ class Player(RigidBody):
         return pygame.mask.from_surface(temp)
 
 
-    def collide_with_solid(self):
+    def collide_with_solid(self, cancel_knock=True):
         """Called from level when the player walks into a solid tile."""
         #TODO aqui entra a animação de explosão
         self.alive=False
         self.hit_state=True
         self.death_anim = Explosion(self.rect.center)
         print("Colision")
-
-
-
-
-
 
 
     def got_hit(self, enemy):
