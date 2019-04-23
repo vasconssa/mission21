@@ -18,7 +18,7 @@ class Predictor:
         dt = 15*player.dt
         heading = player.heading
         planets = player.planets
-        steps = 50
+        steps = 30
         self.trajPoints = []
         for i in range(steps):
             pos, vel = self.integrator.integrate(pos, vel, heading, 0.0, dt, planets, internalForce)

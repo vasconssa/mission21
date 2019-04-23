@@ -11,7 +11,6 @@ import pygame
 from pygame.locals import *
 from Hud import Hud
 import prepare,tools
-from source import prepare
 
 class Scene(AbstractScene):
     def __init__(self, screen):
