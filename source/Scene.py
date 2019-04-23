@@ -76,6 +76,8 @@ class Scene(AbstractScene):
                 score -= 1
             self.hud.updateScore(score)
             self.hud.updateFuel(fuel)
+        elif(self.player.alive):
+            self.player.update()
 
 
 

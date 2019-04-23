@@ -225,10 +225,16 @@ class Explosion(pygame.sprite.Sprite):
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 50
         self.done =False
+        self.configure_sound()
+
+    def configure_sound(self):
+        player = prepare.MUSIC["explosion_player"]
+        player = pygame.mixer.Sound(player)
+        player.play(0)
 
     def update(self):
         now = pygame.time.get_ticks()
-        if now - self.last_update > self.frame_rate:
+        if (now - self.last_update) > self.frame_rate:
             self.last_update = now
             self.frame += 1
             if self.frame >= len(Explosion.explosion_anim):
