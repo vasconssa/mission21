@@ -71,6 +71,4 @@ class RigidBody(GameObject):
         super(RigidBody, self).update()
 
     def collide_with_player(self, player):
-        super(RigidBody,self).collide_with_player(player)
         pass
-    

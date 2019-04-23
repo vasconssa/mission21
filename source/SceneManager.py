@@ -21,7 +21,7 @@ class SceneManager:
     def createScenes(self):
         # Scene 1
         scene1 = Scene(self.screen)
-        planeta = prepare.GFX["assets"]['greenPlanet'].convert_alpha()
+        planeta = prepare.GFX["assets"]['greenPlanet']
         rect = planeta.get_rect()
         w, h = rect.width, rect.height
         planeta = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
@@ -40,4 +40,3 @@ class SceneManager:
         xS = x*w
         yS = y*h
         return (int(xS), int(yS))
-        
