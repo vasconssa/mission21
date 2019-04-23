@@ -39,7 +39,7 @@ class Scene(AbstractScene):
 
     def createPlayer(self):
         screenW, screenH = self.screen.get_size()
-        player = Player((10, screenH/2.0))
+        player = Player((30, screenH/2.0))
         player.surf = self.screen
         player.planets = self.planets
         self.player = player

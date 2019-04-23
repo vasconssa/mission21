@@ -6,9 +6,10 @@ import prepare
 import tools
 from states import title,splash,select,game
 
-def __configure_sound(self):
+def __configure_sound():
     pygame.mixer.init()
-    player = pygame.mixer.Sound('./Audio/music_background.wav')
+    player = prepare.MUSIC["music_background"]
+    player = pygame.mixer.Sound(player)
     player.play(-1)
 
 __configure_sound()
