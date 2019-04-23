@@ -15,7 +15,7 @@ class Predictor:
         internalForce = player.internalForce
         pos = player.pos
         vel = player.vel
-        dt = 20*player.dt
+        dt = 15*player.dt
         heading = player.heading
         planets = player.planets
         steps = 50
@@ -25,6 +25,6 @@ class Predictor:
             self.trajPoints.append((pos[0], pos[1]))
 
     def draw(self, surface):
-        color = (241, 95, 188)
+        color = (241, 15, 188)
         pygame.draw.lines(surface, color, False, self.trajPoints)
 
