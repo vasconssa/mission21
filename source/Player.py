@@ -101,6 +101,7 @@ class Player(RigidBody):
     def __init__(self, initialPos):
 
         self.alive = True
+        self.final = False
 
         self.imageMap = ImageMap()
         # self.imageMap.addImage("normal", "../assets/spaceShip.png")
@@ -125,9 +126,10 @@ class Player(RigidBody):
         self.dt = 30/100.0
         self.planets = None
         self.mask = self.make_mask()
+        self.death_anim = None
+        self.got_hit=False
 
         self.prepare_death_animation()
-        self.death_anim = None
 
 
 
@@ -142,17 +144,25 @@ class Player(RigidBody):
         self.inputHandler.handle(self, event)
 
     def update(self):
-        self.rotate(self.rotateAngle)
-        if self.ignite:
-            super(Player, self).update(self.dt, self.planets)
-        if self.internalForce != 0:
-            self.ignite = True
-            self.fuel -= 0.1
+        if(self.final):
+            return
         if self.alive:
             self.rotate(self.rotateAngle)
-            super(Player, self).update(self.dt, self.planets)
+
+            if self.ignite:
+                super(Player, self).update(self.dt, self.planets)
+            if self.internalForce != 0:
+                self.ignite = True
+                self.fuel -= 0.1
+
+                self.rotate(self.rotateAngle)
+                super(Player, self).update(self.dt, self.planets)
         else:
-            self.death_anim.update()
+            if self.death_anim is not None:
+                self.death_anim.update()
+
+
+
 
 
 
@@ -173,9 +183,11 @@ class Player(RigidBody):
     def collide_with_solid(self, cancel_knock=True):
         """Called from level when the player walks into a solid tile."""
         #TODO aqui entra a animação de explosão
-        self.alive=False
-        self.hit_state=True
-        self.death_anim = Explosion(self.rect.center)
+        if not self.alive :
+            self.death_anim = Explosion(self.rect.center)
+        elif self.final:
+            pass
+
         print("Colision")
 
 
@@ -198,6 +210,7 @@ class Player(RigidBody):
             img.set_colorkey(BLACK)
             img = pygame.transform.scale(img, (75, 75))
             Explosion.explosion_anim.append(img)
+
 
 
 class Explosion(pygame.sprite.Sprite):

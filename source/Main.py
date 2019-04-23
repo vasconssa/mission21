@@ -14,18 +14,17 @@ def __configure_sound():
 
 __configure_sound()
 
+from states import title,splash,select,game, win_screen
 app = tools.Control(prepare.ORIGINAL_CAPTION)
 state_dict = {"SPLASH"   : splash.Splash(),
               "TITLE"    : title.Title(),
               "SELECT"   : select.Select(),
               # "REGISTER" : register.Register(),
               # "CONTROLS" : viewcontrols.ViewControls(),
-              "GAME"     : game.Game()
-              # "CAMP"     : camp.Camp()
+              "GAME"     : game.Game(),
+               "WINSCREEN"     : win_screen.WinScreen()
               }
 app.state_machine.setup_states(state_dict, "SPLASH")
-
-
 
 
 app.main()

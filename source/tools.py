@@ -28,6 +28,9 @@ class Control(object):
         self.keys = pg.key.get_pressed()
         self.state_machine = state_machine.StateMachine()
 
+
+
+
     def update(self):
         """
         Updates the currently active state.

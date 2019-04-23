@@ -8,10 +8,6 @@ import pygame as pg
 
 import tools
 
-# from source.Player import Explosion
-
-
-
 pg.init()
 
 SCREEN_SIZE = (1200, 700)
