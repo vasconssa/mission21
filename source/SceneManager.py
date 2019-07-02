@@ -13,65 +13,76 @@ from Scene import Scene
 from components.planet import Planet
 
 
-class SceneManager:
+class SceneBuilder:
     def __init__(self, screen):
-        self.scenes = []
         self.screen = screen
-        self.createScenes()
+        self.scene = Scene(screen)
+        self.setBackground()
+        self.createPlayer()
+        self.createPlatforms()
 
-    def createScenes(self):
-        # Scene 1
-        scene1 = Scene(self.screen)
-        planeta = prepare.GFX["assets"]['greenPlanet']
-        rect = planeta.get_rect()
+    def setBackground(self, backgroundName = 'background'):
+        self.scene.background = prepare.GFX['assets']['background'].convert()
+        self.scene.background = pygame.transform.scale(self.scene.background, (1200, 900))
+        return self
+
+    def createPlayer(self):
+        screenW, screenH = self.screen.get_size()
+        player = Player((30, screenH/2.0))
+        player.surf = self.screen
+        player.planets = self.scene.planets
+        self.scene.player = player
+        self.scene.playerGroup.add(self.scene.player)
+        return self
+
+    def createPlatforms(self):
+        begin = prepare.GFX["assets"]['base'].convert_alpha()
+        rect = begin.get_rect()
         w, h = rect.width, rect.height
-        planetafase1 = pygame.transform.scale(planeta, (floor(0.3 * w), floor(0.3 * h)))
-        wS, hS = self.screen.get_size()
-        x = 0.5
-        y = 0.5
-        screenCoord = self.coord2Screen(x,y)
-        planetfase1 = Planet("teste2", planetafase1, 100001.0, screenCoord, 150.0)
-        scene1.addPlanet(planetfase1)
-
-        self.scenes.append(scene1)
-
-        # Scene 2
-        scene2 = Scene(self.screen)
-        planetafase2 = prepare.GFX["assets"]['moonPlanet'].convert_alpha()
-        planeta2fase2 = prepare.GFX["assets"]['rocketPlanet'].convert_alpha()
-        rect = planetafase2.get_rect()
+        begin = pygame.transform.scale(begin, (floor(0.15*w), floor(0.15*h)))
+        end = prepare.GFX["assets"]['base'].convert_alpha()
+        rect = end.get_rect()
         w, h = rect.width, rect.height
-        planetafase2 = pygame.transform.scale(planetafase2, (floor(0.3 * w), floor(0.3 * h)))
-        planeta2fase2 = pygame.transform.scale(planeta2fase2, (floor(0.3 * w), floor(0.3 * h)))
-        wS, hS = self.screen.get_size()
-        x = 0.7
-        y = 0.8
-        screenCoord = self.coord2Screen(x,y)
-        planetfase2 = Planet("teste2", planetafase2, 100001.0, screenCoord, 250.0)
-        x = 0.4
-        y = 0.3
-        screenCoord = self.coord2Screen(x,y)
-        planet2fase2 = Planet("teste2", planeta2fase2, 100001.0, screenCoord, 200.0)
-        scene2.addPlanet(planetfase2)
-        scene2.addPlanet(planet2fase2)
-
-        self.scenes.append(scene2)
-
-        # Scene 3
-        scene3 = Scene(self.screen)
-        planetafase3 = prepare.GFX["assets"]['sandPlanet'].convert_alpha()
-        rect = planetafase3.get_rect()
+        end = pygame.transform.scale(end, (floor(0.15*w), floor(0.15*h)))
+        rect = end.get_rect()
         w, h = rect.width, rect.height
-        planetafase3 = pygame.transform.scale(planetafase3, (floor(0.4 * w), floor(0.4 * h)))
-        wS, hS = self.screen.get_size()
-        x = 0.3
-        y = 0.4
-        screenCoord = self.coord2Screen(x,y)
-        planetfase3 = Planet("teste2", planetafase3, 100001.0, screenCoord, 150.0)
-        scene3.addPlanet(planetfase3)
+        screenW, screenH = self.screen.get_size()
+        # self.beginPlatform = GameObject("PlataformaInicial", begin, (w/2.0, screenH/2.0))
+        # self.endPlatform = GameObject("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0))
+        self.scene.beginPlatform = platform.Platform("PlataformaInicial", begin, (w/2.0, screenH/2.0))
+        self.scene.endPlatform = platform.Platform("PlataformaFinal", end, (screenW - w/2.0, screenH/2.0),True)
+        self.scene.platformGroup.add(self.scene.beginPlatform)
+        self.scene.platformGroup.add(self.scene.endPlatform)
+        return self
+    
 
-        self.scenes.append(scene3)
-        self.scenes.append(scene3)
+    def setPlanets(self, planetAssets, positions, masses, gConstants):
+        for planetName, position, mass, G in zip(planetAssets, positions, masses, gConstants):
+            planetImg = prepare.GFX["assets"][planetName]
+            rect = planetImg.get_rect()
+            w, h = rect.width, rect.height
+            planeta = pygame.transform.scale(planetImg, (floor(0.3 * w), floor(0.3 * h)))
+            wS, hS = self.screen.get_size()
+            x = position[0]
+            y = position[1]
+            screenCoord = self.coord2Screen(x,y)
+            planet = Planet(planetName, planeta, mass, screenCoord, G)
+            self.scene.addPlanet(planet)
+
+        return self
+
+    def __call__(self):
+        if self.scene:
+            scene = self.scene
+            self.reset()
+            return scene
+        return None
+
+    def reset(self):
+            self.scene = Scene(self.screen)
+            self.setBackground()
+            self.createPlayer()
+            self.createPlatforms()
 
 
     def coord2Screen(self, x, y):
@@ -79,3 +90,30 @@ class SceneManager:
         xS = x*w
         yS = y*h
         return (int(xS), int(yS))
+
+    
+class SceneManager:
+    def __init__(self, screen):
+        self.scenes = []
+        self.screen = screen
+        self.builder = SceneBuilder(screen)
+        self.createScenes()
+
+    def createScenes(self):
+        # Scene 1
+        scene1 = self.builder.setBackground().setPlanets(['greenPlanet'], [(0.5, 0.5)], [100001.0], [150.0])()
+        self.scenes.append(scene1)
+
+        # Scene 2
+        scene2 = self.builder.setBackground().setPlanets(['moonPlanet', 'rocketPlanet'], [(0.7, 0.8), (0.4, 0.3)],
+                                            [100001.0, 100001.0], [250.0, 250.0])()
+
+        self.scenes.append(scene2)
+
+        # Scene 3
+        scene3 = self.builder.setBackground().setPlanets(['sandPlanet'], [(0.3, 0.4)], [100001.0], [150.0])()
+
+        self.scenes.append(scene3)
+        self.scenes.append(scene3)
+
+

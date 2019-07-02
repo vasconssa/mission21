@@ -67,8 +67,9 @@ class ForwardThrustCommand(Command):
         self.power = power
 
     def execute(self, player):
-        player.setForce(self.power)
-        player.originalImage = player.imageMap.images["fwd"]
+        if player.fuel > 0.9:
+            player.setForce(self.power)
+            player.originalImage = player.imageMap.images["fwd"]
 
     def undo(self, player):
         player.setForce(0)
@@ -79,8 +80,9 @@ class ReverseThrustCommand(Command):
         self.power = -power
 
     def execute(self, player):
-        player.setForce(self.power)
-        player.originalImage = player.imageMap.images["rvs"]
+        if player.fuel > 0.9:
+            player.setForce(self.power)
+            player.originalImage = player.imageMap.images["rvs"]
 
     def undo(self, player):
         player.setForce(0)
@@ -148,16 +150,23 @@ class Player(RigidBody):
             return
         if self.alive:
             self.rotate(self.rotateAngle)
+            if self.fuel > 0.9:
 
-            if not self.ignite:
-                super(Player, self).update(self.dt, [])
+                if not self.ignite:
+                    super(Player, self).update(self.dt, [])
+                else:
+                    super(Player, self).update(self.dt, self.planets)
+                if self.internalForce != 0:
+                    self.ignite = True
+                    self.fuel -= 0.9
+
+                    self.rotate(self.rotateAngle)
             else:
+                self.fuel = 0.0
+                print(self.vel.length())
                 super(Player, self).update(self.dt, self.planets)
-            if self.internalForce != 0:
-                self.ignite = True
-                self.fuel -= 0.1
-
-                self.rotate(self.rotateAngle)
+                if self.vel.length() < 35.0:
+                    self.alive = False
         else:
             if self.death_anim is not None:
                 self.death_anim.update()
